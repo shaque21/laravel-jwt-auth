@@ -79,7 +79,7 @@ class CourseRegisterController extends Controller
         $student_id = auth()->user()->id;
        
 
-        $reg_course = CourseRegister::where('student_id',$student_id)->firstOrFail();
+        $reg_course = CourseRegister::where('student_id',$student_id)->get();
 
         return response()->json([
             'Student ID' => $student_id,
