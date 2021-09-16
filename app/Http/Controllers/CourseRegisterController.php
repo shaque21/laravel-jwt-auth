@@ -78,24 +78,23 @@ class CourseRegisterController extends Controller
     public function student_course(){
 
         $student_id = auth()->user()->id;
-       
+
+
 
         $reg_course = DB::table('course_registers')
-                     ->join('courses','course_registers.course_id','courses.id')
-                     ->join('users','course_registers.student_id','users.id')
-                     ->where('course_registers.student_id',$student_id)
-                     ->get();
-        
-        foreach($reg_course as $value){
+                        ->join('courses','course_registers.course_id','courses.id')
+                        ->join('users','course_registers.student_id','users.id')
+                        ->where('course_registers.student_id',$student_id)
+                        ->get();
+
+        foreach ($reg_course as  $value) {
             $student_name = $value->name;
         }
-
-
         return response()->json([
-            'Student ID' => $student_id,
             'Student Name' => $student_name,
-            'Registered Courses are' => $reg_course
+            'Registered Courses Are' => $reg_course
         ]);
+
 
     }
 
