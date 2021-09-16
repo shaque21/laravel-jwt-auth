@@ -77,15 +77,13 @@ class CourseRegisterController extends Controller
     public function student_course(){
 
         $student_id = auth()->user()->id;
-        $student = User::where('id',$student_id)->firstOrFail();
+       
 
-        $courses = Course::get();
-
-        $reg_course = CourseRegister::where('id',$student_id);
+        $reg_course = CourseRegister::where('student_id',$student_id)->firstOrFail();
 
         return response()->json([
             'Student ID' => $student_id,
-            'Student Name' => $student->student->name,
+            'Student Name' => $reg_course->student->name,
             'Courses' => $reg_course->courses->course_name
         ]);
 
