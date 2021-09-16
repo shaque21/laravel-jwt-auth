@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\CourseRegister;
 use App\Models\Course;
 use App\Models\User;
+use DB;
 
 class CourseRegisterController extends Controller
 {
@@ -79,12 +80,21 @@ class CourseRegisterController extends Controller
         $student_id = auth()->user()->id;
        
 
-        $reg_course = CourseRegister::where('student_id',$student_id)->get();
+        $reg_course = DB::table('course_registers')
+                     ->join('courses','course_registers.course_id','courses.id')
+                     ->join('users','course_registers.student_id','users.id')
+                     ->where('course_registers.student_id',$student_id)
+                     ->get();
+        
+        foreach($res_course as $value){
+            $student_name = $value->name;
+        }
+
 
         return response()->json([
             'Student ID' => $student_id,
-            'Student Name' => $reg_course->student->name,
-            'Courses' => $reg_course->courses->course_name
+            'Student Name' => $student_name,
+            'Registered Courses are' => $reg_course
         ]);
 
     }
