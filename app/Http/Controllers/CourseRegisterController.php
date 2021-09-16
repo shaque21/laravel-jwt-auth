@@ -86,7 +86,7 @@ class CourseRegisterController extends Controller
                      ->where('course_registers.student_id',$student_id)
                      ->get();
         
-        foreach($res_course as $value){
+        foreach($reg_course as $value){
             $student_name = $value->name;
         }
 
